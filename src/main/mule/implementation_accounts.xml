@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="getAccounts" doc:id="7c152529-c751-4128-a298-6e633c07c7f7" >
+		<ee:transform doc:name="Copy_of_Transform Message" doc:id="acfcf8f8-fcae-4907-891e-9e74175056e1" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    id: "1111",
+    firstName: "John",
+    lastName: "Doe",
+    address: "123 Main St., Dallas TX",
+    postal: "77777",
+    country: "USA",
+    miles: 999,
+    creationDate: "2019-08-21T04:34:41.098Z",
+    "type": "personal"
+  }, 
+  {
+    id: "2222",
+    firstName: "Jane",
+    lastName: "Doe",
+    address: "10 Downing St., San Francisco CA",
+    postal: "89897",
+    country: "USA",
+    miles: 101,
+    creationDate: "2018-12-09T21:53:12.127Z",
+    "type": "business"
+  }
+]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="postAccounts" doc:id="e8d41703-e9a1-402d-b633-d410ee175575" >
+		<ee:transform doc:name="Copy_of_Transform Message" doc:id="c99353b1-89e1-4a9e-b986-6f1c3ac8ff20" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  message: "Accounts *virtually* created (but not really)"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
