@@ -1,39 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
-	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="b17164de-e996-44f5-8804-469afeaa5a17" >
+		<db:my-sql-connection host="mudb.learn.mulesoft.com" port="3306" user="mule" password="mule" database="training" />
+	</db:config>
 	<flow name="getAccounts" doc:id="7c152529-c751-4128-a298-6e633c07c7f7" >
-		<ee:transform doc:name="Copy_of_Transform Message" doc:id="acfcf8f8-fcae-4907-891e-9e74175056e1" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" >
+		<db:select doc:name="Select" doc:id="536ac1b4-0667-494f-8c91-03857a7c93fc" config-ref="Database_Config">
+			<db:sql ><![CDATA[SELECT *
+FROM flights_customers]]></db:sql>
+		</db:select>
+		<ee:transform doc:name="FormatAsJson" doc:id="acfcf8f8-fcae-4907-891e-9e74175056e1" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
 output application/json
 ---
-[
-  {
-    id: "1111",
-    firstName: "John",
-    lastName: "Doe",
-    address: "123 Main St., Dallas TX",
-    postal: "77777",
-    country: "USA",
-    miles: 999,
-    creationDate: "2019-08-21T04:34:41.098Z",
-    "type": "personal"
-  }, 
-  {
-    id: "2222",
-    firstName: "Jane",
-    lastName: "Doe",
-    address: "10 Downing St., San Francisco CA",
-    postal: "89897",
-    country: "USA",
-    miles: 101,
-    creationDate: "2018-12-09T21:53:12.127Z",
-    "type": "business"
-  }
-]]]></ee:set-payload>
+payload]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 	</flow>
