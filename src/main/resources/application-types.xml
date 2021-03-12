@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="Accounts_array" format="java">
+      <types:shape format="raml"><![CDATA[#%RAML 1.0 DataType
+displayName: Accounts
+description: Array of Account Datatype
+
+type:
+  items:
+    properties:
+      id?:
+        type: string
+        example: '1234'
+      firstName:
+        type: string
+        example: 'Harry'
+      lastName:
+        type: string
+        example: Hearmonster
+      address:
+        type: string
+        example: 12 Moon Street
+      postal:
+        type: string
+        example: '60611'
+      country:
+        type: string
+        example: UK
+      miles:
+        type: integer
+        example: 999
+      creationDate?:
+        type: datetime
+        example: 2018-11-26T16:17:18Z
+        format: rfc3339
+      type:
+        displayName: Account Type
+        description: Type of account, such as Personal or Business
+        type: string
+        enum: [personal, business]
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+</types:mule>
