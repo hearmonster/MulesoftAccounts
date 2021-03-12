@@ -42,4 +42,13 @@ type:
 ]]></types:shape>
     </types:type>
   </types:catalog>
+  <types:enrichment select="#7c152529-c751-4128-a298-6e633c07c7f7">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="Accounts_array"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
 </types:mule>

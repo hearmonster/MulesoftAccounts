@@ -20,7 +20,18 @@ WHERE accountType = :acctType]]></db:sql>
 				<ee:set-payload ><![CDATA[%dw 2.0
 output application/json
 ---
-payload]]></ee:set-payload>
+payload map ( payload01 , indexOfPayload01 ) -> {
+	id: payload01.accountID,
+	firstName: ((payload01.name default "<1stName>") splitBy(' '))[0],
+	lastName: ((payload01.name default "<2ndName>") splitBy(' '))[1],
+	address: ((payload01.street default "<street>") ++ ", " ++ (payload01.city default "<city>") ++ ", " ++ (payload01.state default "<state>")),
+	postal: payload01.postal default "<postal>",
+	country: payload01.country default "<country>",
+	miles: payload01.miles default -1,
+	creationDate: (payload01.creationDate as DateTime default "<dt>"),
+	"type": payload01.accountType default "<type>"
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 	</flow>
