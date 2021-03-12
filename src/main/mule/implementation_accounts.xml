@@ -11,7 +11,9 @@ http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/cu
 	<flow name="getAccounts" doc:id="7c152529-c751-4128-a298-6e633c07c7f7" >
 		<db:select doc:name="Select" doc:id="536ac1b4-0667-494f-8c91-03857a7c93fc" config-ref="Database_Config">
 			<db:sql ><![CDATA[SELECT *
-FROM flights_customers]]></db:sql>
+FROM flights_customers
+WHERE accountType = :acctType]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{'acctType' : (message.attributes.queryParams['type'] as String default "personal") }]]]></db:input-parameters>
 		</db:select>
 		<ee:transform doc:name="FormatAsJson" doc:id="acfcf8f8-fcae-4907-891e-9e74175056e1" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" >
 			<ee:message >
