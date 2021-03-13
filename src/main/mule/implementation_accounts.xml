@@ -47,4 +47,56 @@ output application/json
 			</ee:message>
 		</ee:transform>
 	</flow>
+	<flow name="getAccountsID" doc:id="840ad7e1-00d3-4b1e-bee2-7f783a80e154" >
+		<ee:transform doc:name="Copy_of_Transform Message" doc:id="a78d4d5b-6dea-434e-9838-ca33fe37ac52" >
+			<ee:variables >
+				<ee:set-variable variableName="ID" ><![CDATA[(attributes.uriParams.'ID' as String default "<id>")]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<db:select doc:name="Select" doc:id="3ef24232-44f6-469d-a1cb-aa0eee75d921" config-ref="Database_Config">
+			<db:sql ><![CDATA[SELECT *
+FROM flights_customers
+WHERE accountID = :ID]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{ 'ID' : vars.ID }]]]></db:input-parameters>
+		</db:select>
+		<ee:transform doc:name="Copy_of_FormatAsJson" doc:id="8cfafcab-c6c3-4bf1-8ee8-1d9dcc7d9a1f" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+	id: payload01.accountID,
+	firstName: ((payload01.name default "<1stName>") splitBy(' '))[0],
+	lastName: ((payload01.name default "<2ndName>") splitBy(' '))[1],
+	address: ((payload01.street default "<street>") ++ ", " ++ (payload01.city default "<city>") ++ ", " ++ (payload01.state default "<state>")),
+	postal: payload01.postal default "<postal>",
+	country: payload01.country default "<country>",
+	miles: payload01.miles default -1,
+	creationDate: (payload01.creationDate as DateTime default "<dt>"),
+	"type": payload01.accountType default "<type>"
+}
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="SCRATCH" doc:id="27417ad4-9290-44f4-84f5-2821b67e3f9f" >
+		<ee:transform doc:name="Copy_of_Copy_of_Transform Message" doc:id="1cf2eff6-bf21-453a-a49f-4f783d76f8bd" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  id: vars.ID,
+  firstName: "Harry",
+  lastName: "Hearmon",
+  address: "30 E Huron St, Chicago, Illinois",
+  postal: "60611",
+  country: "USA",
+  miles: 999,
+  creationDate: "2004-06-22T04:34:41.098Z",
+  "type": "personal"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
 </mule>

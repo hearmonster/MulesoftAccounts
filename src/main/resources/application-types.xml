@@ -41,8 +41,22 @@ type:
         enum: [personal, business]
 ]]></types:shape>
     </types:type>
+    <types:type name="IDtype" format="java">
+      <types:shape format="raml"><![CDATA[#%RAML 1.0 DataType
+type: string]]></types:shape>
+    </types:type>
   </types:catalog>
   <types:enrichment select="#7c152529-c751-4128-a298-6e633c07c7f7">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="Accounts_array"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#45896f05-1888-4ae1-9523-8c366a671f80"/>
+  <types:enrichment select="#8cfafcab-c6c3-4bf1-8ee8-1d9dcc7d9a1f">
     <types:processor-declaration>
       <types:output-event>
         <types:message>
