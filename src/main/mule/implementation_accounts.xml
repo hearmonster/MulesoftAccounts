@@ -48,7 +48,7 @@ output application/json
 		</ee:transform>
 	</flow>
 	<flow name="getAccountsID" doc:id="840ad7e1-00d3-4b1e-bee2-7f783a80e154" >
-		<ee:transform doc:name="Copy_of_Transform Message" doc:id="a78d4d5b-6dea-434e-9838-ca33fe37ac52" >
+		<ee:transform doc:name="setVariable_ID" doc:id="a78d4d5b-6dea-434e-9838-ca33fe37ac52" >
 			<ee:variables >
 				<ee:set-variable variableName="ID" ><![CDATA[(attributes.uriParams.'ID' as String default "<id>")]]></ee:set-variable>
 			</ee:variables>
@@ -59,7 +59,7 @@ FROM flights_customers
 WHERE accountID = :ID]]></db:sql>
 			<db:input-parameters ><![CDATA[#[{ 'ID' : vars.ID }]]]></db:input-parameters>
 		</db:select>
-		<ee:transform doc:name="Copy_of_FormatAsJson" doc:id="8cfafcab-c6c3-4bf1-8ee8-1d9dcc7d9a1f" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" >
+		<ee:transform doc:name="FormatAsJson_COPY" doc:id="8cfafcab-c6c3-4bf1-8ee8-1d9dcc7d9a1f" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
 output application/json
@@ -80,7 +80,7 @@ payload map ( payload01 , indexOfPayload01 ) -> {
 		</ee:transform>
 	</flow>
 	<flow name="SCRATCH" doc:id="27417ad4-9290-44f4-84f5-2821b67e3f9f" >
-		<ee:transform doc:name="Copy_of_Copy_of_Transform Message" doc:id="1cf2eff6-bf21-453a-a49f-4f783d76f8bd" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" >
+		<ee:transform doc:name="MockData_SingleRecord" doc:id="1cf2eff6-bf21-453a-a49f-4f783d76f8bd" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
 output application/json

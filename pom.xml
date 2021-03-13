@@ -74,7 +74,7 @@
     	<dependency>
             <groupId>100428d1-db13-4825-a25f-ba6cecf1e626</groupId>
             <artifactId>accounts-api</artifactId>
-            <version>1.0.2</version>
+            <version>1.0.3</version>
             <classifier>raml</classifier>
             <type>zip</type>
         </dependency>

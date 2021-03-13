@@ -3,7 +3,7 @@
     <http:listener-config name="accounts-api-httpListenerConfig">
         <http:listener-connection host="0.0.0.0" port="8081" />
     </http:listener-config>
-    <apikit:config name="accounts-api-config" api="resource::100428d1-db13-4825-a25f-ba6cecf1e626:accounts-api:1.0.2:raml:zip:accounts-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+    <apikit:config name="accounts-api-config" api="resource::100428d1-db13-4825-a25f-ba6cecf1e626:accounts-api:1.0.3:raml:zip:accounts-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
     <flow name="accounts-api-main">
         <http:listener config-ref="accounts-api-httpListenerConfig" path="/api/*">
             <http:response statusCode="#[vars.httpStatus default 200]">
@@ -130,6 +130,62 @@ output application/json
         <flow-ref doc:name="Flow Reference" doc:id="0ede98a0-bc34-4d82-abbf-ce52128c0c69" name="postAccounts" />
     </flow>
     <flow name="get:\accounts\(ID):accounts-api-config">
-		<flow-ref doc:name="Flow Reference" doc:id="45896f05-1888-4ae1-9523-8c366a671f80" name="getAccountsID"/>
+        <flow-ref doc:name="Flow Reference" doc:id="45896f05-1888-4ae1-9523-8c366a671f80" name="getAccountsID" />
+    </flow>
+    <flow name="put:\accounts\(ID):application\json:accounts-api-config">
+        <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core">
+            <ee:variables>
+                <ee:set-variable variableName="ID">attributes.uriParams.'ID'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  message: "Account replaced (but not really)"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="patch:\accounts\(ID):application\json:accounts-api-config">
+        <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core">
+            <ee:variables>
+                <ee:set-variable variableName="ID">attributes.uriParams.'ID'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  message: "Account updated (but not really)"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="patch:\resource\(id):application\json:accounts-api-config">
+        <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core">
+            <ee:variables>
+                <ee:set-variable variableName="id">attributes.uriParams.'id'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <logger level="INFO" message="patch:\resource\(id):application\json:accounts-api-config" />
+    </flow>
+    <flow name="get:\resource:accounts-api-config">
+        <logger level="INFO" message="get:\resource:accounts-api-config" />
+    </flow>
+    <flow name="get:\resource\(id):accounts-api-config">
+        <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core">
+            <ee:variables>
+                <ee:set-variable variableName="id">attributes.uriParams.'id'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <logger level="INFO" message="get:\resource\(id):accounts-api-config" />
+    </flow>
+    <flow name="post:\resource:application\json:accounts-api-config">
+        <logger level="INFO" message="post:\resource:application\json:accounts-api-config" />
     </flow>
 </mule>

@@ -58,6 +58,20 @@ type: string]]></types:shape>
   <types:enrichment select="#45896f05-1888-4ae1-9523-8c366a671f80"/>
   <types:enrichment select="#8cfafcab-c6c3-4bf1-8ee8-1d9dcc7d9a1f">
     <types:processor-declaration>
+      <types:input-event>
+        <types:variables>
+          <types:variable name="ID" type="IDtype"/>
+        </types:variables>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="Accounts_array"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#840ad7e1-00d3-4b1e-bee2-7f783a80e154">
+    <types:processor-declaration>
       <types:output-event>
         <types:message>
           <types:payload type="Accounts_array"/>
